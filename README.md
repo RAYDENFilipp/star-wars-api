@@ -1,2 +1,2 @@
-# star-wars-api
-Section 21, Lecture 196
+# StarWars-API site
+## [Site](https://raydenfilipp.github.io/star-wars-api/)
