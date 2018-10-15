@@ -38,8 +38,11 @@ export class ContentWindow extends Component {
         this.fetchData();
     }
 
-    componentDidUpdate = prevProps => {
+    componentDidUpdate = (prevProps) => {
         if (this.props.category !== prevProps.category) {
+            this.setState({
+                results: []
+            })
             this.fetchData();
         }
     };
@@ -49,8 +52,7 @@ export class ContentWindow extends Component {
         const list = results.filter(name =>
             name.toLowerCase().includes(searchField.toLowerCase())
         );
-        if (this.props.category) {
-            return (
+            return results.length ? (
                 <div>
                     <SearchBox
                         searchField={searchField}
@@ -58,9 +60,8 @@ export class ContentWindow extends Component {
                     />
                     <CardsList category={this.props.category} list={list} />
                 </div>
-            );
-        }
-        return null;
+            ) :
+            <h2>Loading...</h2>
     }
 }
 
