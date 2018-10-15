@@ -7,8 +7,7 @@ export class ContentWindow extends Component {
         super(props);
         this.state = {
             searchField: "",
-            results: [],
-            category: props.category
+            results: []
         };
     }
 
@@ -18,36 +17,50 @@ export class ContentWindow extends Component {
         });
     };
 
-    componentDidMount = (category) => {
-        fetch(`https://swapi.co/api/people`)
+    fetchData() {
+        fetch(`https://swapi.co/api/${this.props.category}`)
             .then(response => response.json())
             .then(object => {
                 let arr = [];
-
                 object.results.map(item => {
-                    return arr.push(item.name);
+                    let name = Object.keys(item)[0];
+                    console.log(name);
+                    return arr.push(item[name]);
                 });
+                console.log(arr);
                 this.setState({
                     results: arr
                 });
             });
+    }
+
+    componentDidMount = () => {
+        this.fetchData();
+    }
+
+    componentDidUpdate = prevProps => {
+        if (this.props.category !== prevProps.category) {
+            this.fetchData();
+        }
     };
 
     render() {
-        const { searchField, results, category } = this.state;
-        const list = results.filter( name =>
-            name.toLowerCase()
-                .includes(searchField.toLowerCase())
-            )
-        if (category) {
+        const { searchField, results } = this.state;
+        const list = results.filter(name =>
+            name.toLowerCase().includes(searchField.toLowerCase())
+        );
+        if (this.props.category) {
             return (
                 <div>
-                    <SearchBox searchField={searchField} input={this.onSearch} />
-                    <CardsList category={category} list={list} />
+                    <SearchBox
+                        searchField={searchField}
+                        input={this.onSearch}
+                    />
+                    <CardsList category={this.props.category} list={list} />
                 </div>
             );
         }
-        return null
+        return null;
     }
 }
 

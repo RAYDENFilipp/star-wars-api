@@ -6,7 +6,7 @@ const Button = ( {name, onClick} ) => {
     className="f10 link br2 ph3 pv2 mb2 dib bg-transparent menu-button"
     onClick={onClick}>
             {name}
-    </button>
+        </button>
     )
 }
 

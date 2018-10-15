@@ -7,34 +7,47 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            category: ''
+            category: ""
         };
     }
 
     names = [
-        'planets',
-        'spaceships',
-        'vehicles',
-        'people',
-        'films',
-        'species'
-    ]
+        "planets",
+        "starships",
+        "vehicles",
+        "people",
+        "films",
+        "species"
+    ];
 
-    filterCategory = (i) => {
+    filterCategory = i => {
         this.setState({
             category: this.names[i]
-        })
-    }
+        });
+    };
 
     render() {
-        return (
+        const { category } = this.state;
+        return category? (
             <div className="App">
                 <h1>StarWars API</h1>
-                <ButtonMenu names={this.names} onClick={i => this.filterCategory(i)} />
-                <ContentWindow category={this.state.category}/>
+                <ButtonMenu
+                    names={this.names}
+                    onClick={i => this.filterCategory(i)}
+                />
+                <ContentWindow category={category} />
             </div>
-            );
-        }
+        ) :
+        (
+            <div className="App">
+                <h1>StarWars API</h1>
+                <ButtonMenu
+                    names={this.names}
+                    onClick={i => this.filterCategory(i)}
+                />
+            </div>
+        );
     }
+}
 
 export default App;
